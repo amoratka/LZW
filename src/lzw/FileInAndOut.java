@@ -104,7 +104,7 @@ public class FileInAndOut {
      */
     public static void writecompressed(List<Integer> compressed) throws FileNotFoundException {
 
-        try (PrintWriter zapis = new PrintWriter("outputuncompressed.txt")) {
+        try (PrintWriter zapis = new PrintWriter("outputcompressed.txt")) {
 
             //FileOutputStream fos = null;
             String str = "Tekst do zapisania w pliku i dwie liczby: 123 i 321";
@@ -118,9 +118,9 @@ public class FileInAndOut {
         }
     }
 
-    public static void writedecompressed(String decompressed) throws FileNotFoundException {
+    public static void writedecompressed(String decompressed, String outputfile) throws FileNotFoundException {
 
-        try (PrintWriter zapis = new PrintWriter("outputdecompressed.txt")) {
+        try (PrintWriter zapis = new PrintWriter(outputfile)) {
 
             zapis.print(decompressed);
 

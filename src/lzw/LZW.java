@@ -5,18 +5,17 @@
  */
 package lzw;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author Kamila
  */
-import java.io.FileNotFoundException;
-import java.util.*;
-import static lzw.FileInAndOut.readuncompressed;
-import static lzw.FileInAndOut.writecompressed;
-import static lzw.FileInAndOut.writedecompressed;
- 
 public class LZW {
-    /** Compress a string to a list of output symbols. */
     public static List<Integer> compress(String uncompressed) throws FileNotFoundException {
         
 // Build the dictionary.
@@ -68,7 +67,7 @@ public class LZW {
             String entry;
             if (dictionary.containsKey(k))
                 entry = dictionary.get(k);
-            else if (k == dictSize)
+             else if (k == dictSize)
                 entry = w + w.charAt(0);
             else
                 throw new IllegalArgumentException("Bad compressed k: " + k);
@@ -83,17 +82,5 @@ public class LZW {
         }
        
         return result.toString();
-    }
- 
-    public static void main(String[] args) throws FileNotFoundException { 
-        String input;
-        input = readuncompressed("input3.txt");
-        List<Integer> compressed = compress(input);
-        writecompressed(compressed);
-        System.out.println(compressed);
-        String decompressed = decompress(compressed);
-        System.out.println(decompressed);
-        writedecompressed(decompressed);
-       
     }
 }
