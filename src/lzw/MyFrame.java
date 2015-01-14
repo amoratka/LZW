@@ -236,8 +236,9 @@ public final class MyFrame extends JFrame {
 
             public void actionPerformed(ActionEvent lzwdc) {
                 textAreacompress.setText("");
-                textAreacompress.setText(compressed.toString());
+
                 if (male.isSelected() == true) {
+                    textAreacompress.setText(compressed.toString());
                     decompressed = decompress(compressed);
                     System.out.println(decompressed);
                     outputfile = "outputdecompressed.txt";
@@ -251,13 +252,13 @@ public final class MyFrame extends JFrame {
                     }
                 } else {
                     try {
-                        bzip.decode();                        
+                        bzip.decode();
                         FileReader fr = null;
                         String linia = "";
 
                         // OTWIERANIE PLIKU:
                         try {
-                            fr = new FileReader("zdekodowany.txt");
+                            fr = new FileReader(input);
                         } catch (FileNotFoundException e) {
                             System.out.println("BŁĄD PRZY OTWIERANIU PLIKU!");
                             System.exit(1);
@@ -289,13 +290,11 @@ public final class MyFrame extends JFrame {
                 }
             }
         });
-                        
-                    
-              
+
         this.add(LZWDC);
 
         //  JButton LZWDC = new JButton("Dekompresja");
-        LZWDC.setBounds(1500, 120, 250, 50);
+        // LZWDC.setBounds(1500, 120, 250, 50);
         LZWDC.addActionListener((ActionEvent lzwdc) -> {
 
         }
@@ -340,24 +339,33 @@ public final class MyFrame extends JFrame {
                         }
 
                         BufferedReader bfr = new BufferedReader(fr);
-int j=0;textAreacompress.setText("");String result="";
+                        int j = 0;
+                        textAreacompress.setText("");
+                        String result = "";
                         // ODCZYT KOLEJNYCH LINII Z PLIKU:
                         try {
                             while ((linia = bfr.readLine()) != null) {
                                 int n = indeksy.size();
-                        
-                            int nrlinia = indeksy.get(j).getLinia();
-                            int indeks = indeksy.get(j).getIndex();
-                            highlighter.addHighlight(indeks, fraza.length() + indeks, painter);
-                                j++;
-                                result=result+linia;
+                                int indeks;
+                                int nrlinia;
+                                while (j < n) {
+                                    nrlinia = indeksy.get(j).getLinia();
+                                    indeks = indeksy.get(j).getIndex();
+                                    if (j == nrlinia) {
+                                        highlighter.addHighlight(indeks, fraza.length() + indeks, painter);
+                                    } else {
+                                        break;
+                                    }
+                                    j++;
+                                }
+                                result = result + linia;
                             }
 
                         } catch (IOException e) {
                             System.out.println("BŁĄD ODCZYTU Z PLIKU!");
                             System.exit(2);
                         }
-                        
+
                         textAreacompress.setText(result);
 
                         /* try {
